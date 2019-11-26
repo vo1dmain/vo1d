@@ -13,12 +13,16 @@ internal class MotionController : MonoBehaviour
 	private void Awake()
 	{
 		character = GetComponent<Character>();
+
+		KeyboardInputHandler += MotionInput;
+		KeyboardInputHandler += MenuInput;
+		MouseInputHandler = RotationInput;
 	}
 
 	private void Update()
 	{
-		MouseInput();
-		KeyboardInput();
+		MouseInputHandler?.Invoke();
+		KeyboardInputHandler?.Invoke();
 	}
 
 	#endregion
@@ -26,67 +30,66 @@ internal class MotionController : MonoBehaviour
 	#region Private class methods
 
 	/// <summary>
-	/// Перехват и обработка ввода с клавиатуры.
+	/// Перехват и обработка ввода с клавиатуры, отвечающего за перемещение.
 	/// </summary>
-	private void KeyboardInput()
+	private void MotionInput()
 	{
-		//
-		// Если персонаж жив и не использует камеры на карте
-		//
-		if (character.Alive && !character.InCameraMode)
+		float deltaX = 0; // Смещение вдоль оси X
+		float deltaZ = 0; // Смещение вдоль оси Z
+
+		if (Input.GetKey(Keys.MoveForward))
 		{
-			float deltaX = 0; // Смещение вдоль оси X
-			float deltaZ = 0; // Смещение вдоль оси Z
+			deltaZ = 1f; // Соответствует движению вперёд
+		}
+		else if (Input.GetKey(Keys.MoveBackward))
+		{
+			deltaZ = -1f; // Соответствует движению назад
+		}
 
-			if (Input.GetKey(Keys.MoveForward))
-			{
-				deltaZ = 1f; // Соответствует движению вперёд
-			}
-			else if (Input.GetKey(Keys.MoveBackward))
-			{
-				deltaZ = -1f; // Соответствует движению назад
-			}
+		if (Input.GetKey(Keys.MoveLeft))
+		{
+			deltaX = 1f; // Соответствует движению влево
+		}
+		else if (Input.GetKey(Keys.MoveRight))
+		{
+			deltaX = -1f; // Соответствует движению вправо
+		}
 
-			if (Input.GetKey(Keys.MoveLeft))
-			{
-				deltaX = 1f; // Соответствует движению влево
-			}
-			else if (Input.GetKey(Keys.MoveRight))
-			{
-				deltaX = -1f; // Соответствует движению вправо
-			}
+		if (Input.GetKey(Keys.Run))
+		{
+			character.Move(deltaX, deltaZ, CharacterMoveMode.Run);
+		}
+		else if (Input.GetKey(Keys.Walk))
+		{
+			character.Move(deltaX, deltaZ, CharacterMoveMode.SlowWalk);
+		}
+		else
+		{
+			character.Move(deltaX, deltaZ, CharacterMoveMode.Walk);
+		}
 
-			if (Input.GetKey(Keys.Run))
-			{
-				character.Move(deltaX, deltaZ, CharacterMoveMode.Run);
-			}
-			else if (Input.GetKey(Keys.Walk))
-			{
-				character.Move(deltaX, deltaZ, CharacterMoveMode.SlowWalk);
-			}
-			else
-			{
-				character.Move(deltaX, deltaZ, CharacterMoveMode.Walk);
-			}
-
-			if (Input.GetKeyDown(Keys.Jump))
-			{
-				character.Jump();
-			}
+		if (Input.GetKeyDown(Keys.Jump))
+		{
+			character.Jump();
 		}
 	}
 
 	/// <summary>
-	/// Перехват и обработка ввода с мыши.
+	/// Перехват и обработка ввода с мыши, отвечающего за поворот объекта.
 	/// </summary>
-	private void MouseInput()
+	private void RotationInput()
 	{
-		//
-		// Если персонаж жив и не использует камеры на карте
-		//
-		if (character.Alive && !character.InCameraMode)
+		RotateHorizontal(Input.GetAxis("Mouse Horizontal"));
+	}
+
+	/// <summary>
+	/// Перехват и обработка ввода с клавиатуры, отвечающего за открытие меню. (Тестовый код)
+	/// </summary>
+	private void MenuInput()
+	{
+		if (Input.GetKeyDown(Keys.Decline))
 		{
-			RotateHorizontal(Input.GetAxis("Mouse Horizontal"));
+			ToggleMotionInputBlock();
 		}
 	}
 
@@ -106,7 +109,27 @@ internal class MotionController : MonoBehaviour
 		transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, rotationHor, 0);
 	}
 
+	private void ToggleMotionInputBlock()
+	{
+		if (motionBlocked == false)
+		{
+			KeyboardInputHandler -= MotionInput;
+			MouseInputHandler = null;
+			motionBlocked = true;
+		}
+		else
+		{
+			KeyboardInputHandler += MotionInput;
+			MouseInputHandler = RotationInput;
+			motionBlocked = false;
+		}
+
+		Debug.Log($"Motion blocked: {motionBlocked}");
+	}
+
 	#endregion
+
+	private delegate void InputHandler();
 
 	#region Private serialized class fields
 
@@ -115,5 +138,10 @@ internal class MotionController : MonoBehaviour
 	/// </summary>
 	[SerializeField] private Character character;
 
+	[SerializeField] private bool motionBlocked = false;
+
 	#endregion
+
+	private InputHandler KeyboardInputHandler = null;
+	private InputHandler MouseInputHandler = null;
 }

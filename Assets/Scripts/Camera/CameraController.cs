@@ -5,11 +5,6 @@ internal class CameraController : MonoBehaviour
 {
 	internal Ray RayToScreenCenter { get; private set; }
 
-	private void Awake()
-	{
-		currentCamera = GetComponent<Camera>();
-	}
-
 	private void Start()
 	{
 		screenCenterPoint = new Vector3(Camera.main.scaledPixelWidth / 2, Camera.main.scaledPixelHeight / 2, 0);

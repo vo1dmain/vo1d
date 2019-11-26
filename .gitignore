@@ -338,8 +338,6 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
-
-# .gitignore
  
 # Unity
 /[Ll]ibrary/
@@ -347,6 +345,10 @@ healthchecksdb
 /[Oo]bj/
 /[Bb]uild/
 /[Bb]uilds/
+/[Pp]rojectSettings/
 /Assets/AssetStoreTools*
 sysinfo.txt
 *.pidb.meta
+
+
+# .gitignore
