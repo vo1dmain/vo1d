@@ -4,9 +4,9 @@ namespace Controls
 {
 	internal static class Keys
 	{
-		internal static void SetNewKey(Action action, KeyCode key)
+		internal static void SetNewKey(string actionName, KeyCode key)
 		{
-			action.SetNewKey(key);
+			//action.SetNewKey(key);
 		}
 
 		internal static KeyCode MoveForward => moveForward.Key;
@@ -19,7 +19,7 @@ namespace Controls
 		internal static KeyCode Aim => aim.Key;
 		internal static KeyCode Reload => reload.Key;
 
-		internal static KeyCode Run => run.Key;
+		internal static KeyCode Sprint => run.Key;
 		internal static KeyCode Walk => walk.Key;
 		internal static KeyCode Jump => jump.Key;
 

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Ammobar : MonoBehaviour
 {
-	private void Awake()
+	/*private void Awake()
 	{
 		HUDPanel = GetComponent<TextMeshProUGUI>();
 		currentAmmoCount = player.Ammo;
@@ -21,7 +21,8 @@ public class Ammobar : MonoBehaviour
 	}
 
 	[SerializeField] private TextMeshProUGUI HUDPanel;
-	[SerializeField] private Character player;
+	[SerializeField] private Character.ICharacterController player;
 
 	private uint currentAmmoCount;
+	*/
 }

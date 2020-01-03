@@ -1,13 +1,21 @@
 ﻿using UnityEngine;
 using Controls;
 
-internal class CameraController : MonoBehaviour
+internal class CameraModel : MonoBehaviour
 {
 	internal Ray RayToScreenCenter { get; private set; }
 
-	private void Start()
+	private void Awake()
 	{
 		screenCenterPoint = new Vector3(Camera.main.scaledPixelWidth / 2, Camera.main.scaledPixelHeight / 2, 0);
+	}
+
+	private void FixedUpdate()
+	{
+		if (currentCamera.enabled && rotationAxes != CameraRotationAxes.None)
+		{
+			RayToScreenCenter = Camera.main.ScreenPointToRay(screenCenterPoint);
+		}
 	}
 
 	private void Update()
@@ -15,8 +23,6 @@ internal class CameraController : MonoBehaviour
 		if (currentCamera.enabled && rotationAxes != CameraRotationAxes.None)
 		{
 			MouseInput();
-
-			RayToScreenCenter = Camera.main.ScreenPointToRay(screenCenterPoint);
 		}
 	}
 
@@ -51,9 +57,11 @@ internal class CameraController : MonoBehaviour
 
 	[SerializeField] private Camera currentCamera;
 
+	[Header("Rotation axes")]
 	[SerializeField] private CameraRotationAxes defaultRotationAxes = CameraRotationAxes.HorAndVert;
 	[SerializeField] private CameraRotationAxes rotationAxes = CameraRotationAxes.HorAndVert;
 
+	[Header("Rotation angles")]
 	[SerializeField] private float minVertRotationAngle = -60f;
 	[SerializeField] private float maxVertRotationAngle = 60f;
 	[SerializeField] private float minHorRotationAngle = -360f;

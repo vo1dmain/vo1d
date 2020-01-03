@@ -5,9 +5,9 @@ public class Healer : MonoBehaviour
 {
 	private void OnTriggerEnter(Collider collider)
 	{
-		character = collider.gameObject.GetComponent<Character>();
+		character = collider.gameObject.GetComponent<Character.ICharacterController>();
 		
-		if (character && !character.GotSuperHealth && character.Alive && healingRoutine == null)
+		if (character != null && healingRoutine == null)
 		{
 			healingRoutine = StartCoroutine(Heal(healPerIteration));
 		}
@@ -15,9 +15,9 @@ public class Healer : MonoBehaviour
 
 	private void OnTriggerStay(Collider collider)
 	{
-		character = collider.gameObject.GetComponent<Character>();
+		character = collider.gameObject.GetComponent<Character.ICharacterController>();
 
-		if (character && !character.GotSuperHealth && character.Alive && healingRoutine == null)
+		if (character != null && healingRoutine == null)
 		{
 			healingRoutine = StartCoroutine(Heal(healPerIteration));
 		}
@@ -25,9 +25,9 @@ public class Healer : MonoBehaviour
 
 	private void OnTriggerExit(Collider collider)
 	{
-		character = collider.gameObject.GetComponent<Character>();
+		character = collider.gameObject.GetComponent<Character.ICharacterController>();
 
-		if (character)
+		if (character != null)
 		{
 			StopAllCoroutines();
 
@@ -49,6 +49,6 @@ public class Healer : MonoBehaviour
 	[SerializeField] private uint healPerIteration = 1;
 	[SerializeField] private float healingDelay = 0.2f;
 
-	private Character character;
+	private Character.ICharacterController character;
 	private Coroutine healingRoutine;
 }

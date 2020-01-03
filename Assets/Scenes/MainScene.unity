@@ -333,7 +333,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damagePerIteration: 5
-  damagingDelay: 1.5
+  damageDelay: 0.2
 --- !u!1 &200092602
 GameObject:
   m_ObjectHideFlags: 0
@@ -1368,8 +1368,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3081a3c02646a0b469c98463deb711a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HUDPanel: {fileID: 753057189}
-  player: {fileID: 2027795040}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -2419,7 +2417,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HUDPanel: {fileID: 1967229441}
-  player: {fileID: 2027795040}
+  currentCharacter: {fileID: 2027795040}
 --- !u!1 &2027795038
 GameObject:
   m_ObjectHideFlags: 0
@@ -2469,43 +2467,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35edae8071ceef04c942253d742727dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpFallOff:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: -0.00000016839476
-      value: 0.99971426
-      inSlope: 0.023872161
-      outSlope: 0.023872161
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.05870319
-    - serializedVersion: 3
-      time: 0.7003853
-      value: 0.0026083225
-      inSlope: -0.17854851
-      outSlope: -0.17854851
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.038111746
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  controller: {fileID: 2027795041}
-  takingHeal: 0
-  walkingSpeed: 5
-  movingSpeed: 10
-  runningSpeed: 13
+  HP: 100
+  maxHP: 100
+  walkSpeed: 5
+  runSpeed: 10
+  sprintSpeed: 15
+  currentSpeed: 0
   jumpForce: 10
-  gravity: -9.82
-  normalizeHealthDelay: 0.5
-  healthPoints: 100
-  armorPoints: 100
-  ammo: 30
-  normalHPMaximum: 100
-  superHPMaximum: 150
+  gravity: -9.87
+  controller: {fileID: 2027795041}
 --- !u!143 &2027795041
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2536,7 +2506,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4530bc21dbdc40a44aedb8822c5dfecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 2027795040}
+  characterModel: {fileID: 2027795040}
+  motionBlocked: 0
 --- !u!33 &2027795043
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2592,11 +2563,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 2027795038}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57b598eaa75120f41ba282772f3bc9a5, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e03bb59e7284fc46b6fb881e4e69ffd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 2027795040}
-  camController: {fileID: 963194229}
+  jumpCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -5.820766e-11
+      value: 1.0044407
+      inSlope: 0.023872161
+      outSlope: 0.023872161
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.05870319
+    - serializedVersion: 3
+      time: 0.6996971
+      value: 0.0000036195852
+      inSlope: 0.00009028992
+      outSlope: 0.00009028992
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.057294045
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  characterModel: {fileID: 2027795040}
 --- !u!1 &2079310995
 GameObject:
   m_ObjectHideFlags: 0

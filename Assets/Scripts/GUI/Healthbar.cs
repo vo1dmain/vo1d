@@ -6,22 +6,15 @@ public class Healthbar : MonoBehaviour
 	private void Awake()
 	{
 		HUDPanel = GetComponent<TextMeshProUGUI>();
-		currentHealth = player.HealthPoints;
-		HUDPanel.text = $"HP {player.HealthPoints}";
+		HUDPanel.text = $"HP {currentCharacter.HealthPoints}";
+		currentCharacter.HealthChanged += UpdateGUI;
 	}
 
-	private void Update()
+	private void UpdateGUI()
 	{
-		if (currentHealth != player.HealthPoints)
-		{
-			currentHealth = player.HealthPoints;
-
-			HUDPanel.text = $"HP {player.HealthPoints}";
-		}
+		HUDPanel.text = $"HP {currentCharacter.HealthPoints}";
 	}
 
 	[SerializeField] private TextMeshProUGUI HUDPanel;
-	[SerializeField] private Character player;
-
-	private uint currentHealth;
+	[SerializeField] private Character.CharacterModel currentCharacter;
 }

@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
 using Controls;
 
-[RequireComponent(typeof(Character))]
-
 internal class WeaponController : MonoBehaviour
 {
-	private void Update()
+	/*private void Update()
 	{
 		if (character.Alive)
 		{
@@ -34,6 +32,6 @@ internal class WeaponController : MonoBehaviour
 		}
 	}
 
-	[SerializeField] private Character character;
 	[SerializeField] private CameraController camController;
+	*/
 }
