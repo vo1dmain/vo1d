@@ -73,6 +73,6 @@ namespace Character
 
 
 
-		private System.Action MoveCharacterAction = null;
+		private event System.Action MoveCharacterAction = null;
 	}
 }

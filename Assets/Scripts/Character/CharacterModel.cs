@@ -33,8 +33,6 @@ namespace Character
 
 		public Vector3 Motion { get; private set; } = Vector3.zero;
 
-
-
 		public void ChangeHP(int deltaHP)
 		{
 			int newHP = (int)HP;
@@ -58,7 +56,7 @@ namespace Character
 			HealthChanged?.Invoke();
 
 		}
-		
+
 		/// <summary>
 		/// Задаёт новый вектор движения персонажа.
 		/// </summary>
@@ -90,6 +88,7 @@ namespace Character
 			Motion = transform.TransformDirection(Motion);
 		}
 
+
 		public void InvokeJump()
 		{
 			Jump?.Invoke();
@@ -119,6 +118,7 @@ namespace Character
 		[SerializeField] private float sprintSpeed;
 		[SerializeField] private float currentSpeed;
 
+		[Header("Physics")]
 		[SerializeField] private float jumpForce;
 		[SerializeField] private float gravity = -9.87f;
 
